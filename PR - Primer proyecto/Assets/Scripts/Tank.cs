@@ -48,8 +48,10 @@ public class Tank : MonoBehaviour
 
     public void Fire(InputAction.CallbackContext context)
     {
+        /*
         Rigidbody bulletF = bullet.GetComponent<Rigidbody>();
-        
+        bulletF.AddForce(bulletSpawnpref.forward * 600000 * 1);
+        */
         if (context.phase != InputActionPhase.Started) return;
 
         
@@ -61,7 +63,7 @@ public class Tank : MonoBehaviour
                 bullets[i].transform.position = spawnBPoint.transform.position;
                 bullets[i].transform.rotation = spawnBPoint.transform.rotation;
                 bullets[i].SetActive(true);
-                bulletF.AddForce(bulletSpawnpref.forward * 600000 * 1);
+                bullets[i].GetComponent<Rigidbody>().AddForce(bulletSpawnpref.forward * 1000 * 2);
                 break;
             }
         }

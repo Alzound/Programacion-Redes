@@ -57,15 +57,15 @@ public class GameManager : MonoBehaviour
         }
             if (tanks[1].GetComponent<battle>().death == true)
             {
-                gameObject.GetComponent<Tank>().SetInitialPos(spawnP[randomIndex].position);
+                tanks[1].GetComponent<Tank>().SetInitialPos(spawnP[randomIndex].position);
             }
             if (tanks[2].GetComponent<battle>().death == true)
             {
-                gameObject.GetComponent<Tank>().SetInitialPos(spawnP[randomIndex].position);
+                tanks[2].GetComponent<Tank>().SetInitialPos(spawnP[randomIndex].position);
             }
             if (tanks[3].GetComponent<battle>().death == true)
             {
-                gameObject.GetComponent<Tank>().SetInitialPos(spawnP[randomIndex].position);
+                tanks[3].GetComponent<Tank>().SetInitialPos(spawnP[randomIndex].position);
             }
 
     }

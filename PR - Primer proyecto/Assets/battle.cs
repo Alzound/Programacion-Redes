@@ -11,7 +11,7 @@ public class battle : MonoBehaviour
     public Transform rot;
     public HealthBar health;
     public Transform tank;
-    public Camera cam;
+    public GameObject thisTank;
 
     // Start is called before the first frame update
     void Start()
@@ -31,13 +31,14 @@ public class battle : MonoBehaviour
         if(currentHealth <= 0)
         {
             death = true;
+            thisTank.gameObject.SetActive(false);
             if(death == true && Input.GetKeyDown(KeyCode.R))
             {
                 SetInitialHealth();
                 Quaternion actualRot = this.gameObject.transform.rotation;
                 rot.rotation = Quaternion.Euler(actualRot.x, actualRot.y, actualRot.z);
                 tank.transform.localPosition = new Vector3(0, 0, 0);
-
+                thisTank.gameObject.SetActive(true);
                 death = false;
             }
         }
