@@ -12,7 +12,7 @@ public class Tank : MonoBehaviour
     float tankSpeed = 15f;
     float tankRot = 510f;
 
-    float firingSpeed = 10f;
+ 
     public GameObject proyectile;
     public int poolCapacity = 5;
     public List<GameObject> bullets;
@@ -20,9 +20,23 @@ public class Tank : MonoBehaviour
     public GameObject bullet;
     public Transform bulletSpawnpref;
 
+
+    public List<Material> mat;
+    public GameObject chasis;
+    public GameObject top;
+    public int num = 0;
+
+    public int tankInd = 0; 
+  
+
     private void Start()
     {
+        
         bullets = new List<GameObject>();
+               
+
+        chasis.GetComponent<Renderer>().material = mat[num];
+        top.GetComponent<Renderer>().material = mat[num];
         for (int i = 0; i < poolCapacity; i++)
         {
             GameObject obj = (GameObject)Instantiate(proyectile);
@@ -37,24 +51,25 @@ public class Tank : MonoBehaviour
     {
         transform.Translate(tankSpeed * tankMovSpeed.y * Time.deltaTime * Vector3.forward);
         transform.Rotate(tankRot * tankMovSpeed.x * Time.deltaTime * Vector3.up);
-        
+      //  change();
+
     }
 
     public void SetInitialPos(Vector3 position)
     {
+        
         spawnPos = position;
-        transform.position = position; 
+        transform.position = position;
+    }
+
+    public void SetPlayerIndex(int index)
+    {
+        tankInd = index; 
     }
 
     public void Fire(InputAction.CallbackContext context)
     {
-        /*
-        Rigidbody bulletF = bullet.GetComponent<Rigidbody>();
-        bulletF.AddForce(bulletSpawnpref.forward * 600000 * 1);
-        */
         if (context.phase != InputActionPhase.Started) return;
-
-        
 
         for (int i = 0; i < bullets.Count; i++)
         {
@@ -67,15 +82,10 @@ public class Tank : MonoBehaviour
                 break;
             }
         }
-
-      
     }
+
     public void Move(InputAction.CallbackContext context)
     {
         tankMovSpeed = context.ReadValue<Vector2>();
-        
-        //transform.Translate(10 * Vector3.forward * context.ReadValue<Vector2>().y * Time.deltaTime);
     }
-  
-
 }

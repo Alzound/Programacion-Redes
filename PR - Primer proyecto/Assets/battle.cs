@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class battle : MonoBehaviour
 {
@@ -12,10 +13,17 @@ public class battle : MonoBehaviour
     public HealthBar health;
     public Transform tank;
     public GameObject thisTank;
+    public int counter;
+
+    
+   
+    public int winner;
+    public int hits;
 
     // Start is called before the first frame update
     void Start()
     {
+
         currentHealth = maximumHealt;
         health.SetMaxHealth (maximumHealt);
     }
@@ -23,60 +31,49 @@ public class battle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        battles();
+      //  counterUP();
+        Battles();
+        
     }
 
-    void battles()
+    void Battles()
     {
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
+
             death = true;
-            thisTank.gameObject.SetActive(false);
-            if(death == true && Input.GetKeyDown(KeyCode.R))
+
+            if (death == true)
             {
-                SetInitialHealth();
+                counter++;
+                thisTank.SetActive(false);
                 Quaternion actualRot = this.gameObject.transform.rotation;
                 rot.rotation = Quaternion.Euler(actualRot.x, actualRot.y, actualRot.z);
                 tank.transform.localPosition = new Vector3(0, 0, 0);
-                thisTank.gameObject.SetActive(true);
+                SetInitialHealth();
                 death = false;
-            }
-        }
-        /*
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            Quaternion actualRot = this.gameObject.transform.rotation;            
-            rot.rotation = Quaternion.Euler(actualRot.x,actualRot.y,actualRot.z);
-            tank.transform.localPosition = new Vector3(0, 0, 0);
-            
-        }
-        */
+                thisTank.SetActive(true); 
+            }    
+        }    
     }
-
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.CompareTag("Bullet"))
-        {
-            Debug.Log("enter");
-            currentHealth -= damage; 
-        }
-    }
-    */
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            Debug.Log("enter");
+
             currentHealth -= damage;
             health.SetHealth(currentHealth);
+            
+            winner = collision.transform.GetComponent<bulletSpeed>().bulletInd;
+            
         }
+        
     }
 
     public void SetInitialHealth()
     {
-        Debug.Log("life");
+
         currentHealth = maximumHealt;
         health.SetMaxHealth(maximumHealt);
     }
