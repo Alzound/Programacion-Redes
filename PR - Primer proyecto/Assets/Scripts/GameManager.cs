@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     public GameObject canvas; 
     PlayerInput input;
 
+    public PlayerData dataM;
+
 
     int index = 0;
 
@@ -36,6 +38,11 @@ public class GameManager : MonoBehaviour
         }
         var = spawnP.Count;
 
+       
+        PlayerInputManager.instance.JoinPlayer(playerIndex: 0,controlScheme: "Keyboard&Mouse", pairWithDevice: Keyboard.current);
+        //Jugador2
+        var input = PlayerInputManager.instance.JoinPlayer(playerIndex: 1);
+        PlayerInput.all[input.playerIndex].SwitchCurrentControlScheme(controlScheme: "Keyboard2", Keyboard.current); 
     }
 
     private void Update()
@@ -43,7 +50,8 @@ public class GameManager : MonoBehaviour
         Death(input); 
         //        changecolor();
         SelectWinner();
-     
+
+        dataM.Data();
     }
 
     public void OnSpawnPlayer(PlayerInput input)
